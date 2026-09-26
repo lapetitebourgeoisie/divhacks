@@ -101,6 +101,45 @@ for (let index = 0; index < 24; index += 1) {
 const meetingsPerPage = 3;
 let currentPage = 1;
 
+// Fictional agenda for the first full-demo meeting only. Source order is stable.
+const housingMeeting = sampleMeetings.find((meeting) => meeting.id === 'demo-housing-streets');
+housingMeeting.agenda = [
+  {
+    id: 'demo-west-96-housing',
+    impact: 'The proposal could add new housing to the neighborhood while affecting affordability, building density, and how the site is used.',
+    category: 'Housing',
+    location: '184 West 96th Street',
+    title: 'Proposed affordable housing development',
+    description: 'A developer is proposing a new residential building that would include a portion of income-restricted apartments. The Community Board will hear details about the project and discuss its potential neighborhood impact.',
+  },
+  {
+    id: 'demo-broadway-97-crossing',
+    impact: 'The redesign could affect pedestrian safety, traffic flow, parking, deliveries, and how residents move through the intersection.',
+    category: 'Transportation',
+    location: 'Broadway & West 97th Street',
+    title: 'Safer intersection redesign',
+    description: 'A street-safety proposal would change the intersection with shorter pedestrian crossings, adjusted curb space, and new loading arrangements.',
+  },
+  {
+    id: 'demo-west-100-license',
+    impact: 'Nearby residents may care about evening activity, noise, outdoor seating, and the addition of a new local business.',
+    category: 'Licensing',
+    location: '221 West 100th Street',
+    title: 'New restaurant liquor license',
+    description: 'A new restaurant is seeking support for a liquor-license application, including evening operating hours and outdoor seating.',
+  },
+  {
+    id: 'demo-amsterdam-cafe',
+    impact: 'The proposal could affect sidewalk space, accessibility, outdoor activity, and nearby residents and businesses.',
+    category: 'Licensing',
+    location: 'Amsterdam Avenue',
+    title: 'Sidewalk café application',
+    description: 'A neighborhood café is requesting permission to operate an outdoor dining area using part of the sidewalk.',
+  },
+];
+// Keep list counts consistent with the actual four-item demo agenda.
+housingMeeting.agendaCategories = housingMeeting.agenda.map((item) => item.category);
+
 const dateFormat = new Intl.DateTimeFormat('en-US', {
   month: 'short', day: 'numeric', year: 'numeric', timeZone: 'America/New_York',
 });
@@ -128,6 +167,12 @@ function renderUpcomingMeetings() {
     button.type = 'button';
     button.className = 'upcoming-row';
     button.dataset.meetingId = meeting.id;
+    if (meeting.id === housingMeeting.id) {
+      button.addEventListener('click', () => {
+        renderMeetingDetail();
+        showScreen('meeting-detail');
+      });
+    }
 
     const date = document.createElement('time');
     date.className = 'upcoming-date';
@@ -208,15 +253,141 @@ function renderPagination() {
   addButton('›', currentPage + 1, 'Next page', currentPage === pageCount);
 }
 
-// Two screens in one document; the navbar and footer stay in place.
+// Reuse the same DOM rows when reordering, preserving open panels and draft text.
+const agendaRows = new Map();
+
+function calendarUrl() {
+  const start = new Date(housingMeeting.start);
+  const end = new Date(start.getTime() + 90 * 60 * 1000);
+  const calendarDate = (date) => date.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}Z$/, 'Z');
+  const params = new URLSearchParams({
+    action: 'TEMPLATE',
+    text: '[FICTIONAL DEMO] Housing & Neighborhood Improvements',
+    dates: `${calendarDate(start)}/${calendarDate(end)}`,
+    ctz: 'America/New_York',
+    details: `Fictional demo only — not a verified real meeting. ${housingMeeting.board}. ${housingMeeting.preview} Duration assumed to be 90 minutes; meeting location is not specified.`,
+  });
+  return `https://calendar.google.com/calendar/render?${params}`;
+}
+
+function createAgendaRow(item) {
+  const row = document.createElement('details');
+  row.className = 'agenda-item';
+  const summary = document.createElement('summary');
+  summary.className = 'agenda-summary';
+  const heading = document.createElement('h3');
+  heading.textContent = `${item.category}: ${item.location}`;
+  const title = document.createElement('p');
+  title.className = 'agenda-subtitle';
+  title.textContent = item.title;
+  const description = document.createElement('p');
+  description.className = 'agenda-description';
+  description.textContent = item.description;
+  summary.append(heading, title, description);
+
+  const expanded = document.createElement('div');
+  expanded.className = 'agenda-expanded';
+  const impactHeading = document.createElement('h4');
+  impactHeading.textContent = 'Why might this matter?';
+  const impact = document.createElement('p');
+  impact.textContent = item.impact;
+  const actions = document.createElement('div');
+  actions.className = 'agenda-actions';
+  const questionButton = document.createElement('button');
+  questionButton.type = 'button';
+  questionButton.className = 'agenda-action';
+  questionButton.textContent = 'Submit a Question';
+  questionButton.setAttribute('aria-expanded', 'false');
+  questionButton.setAttribute('aria-controls', `${item.id}-question-form`);
+  const calendar = document.createElement('a');
+  calendar.className = 'agenda-action';
+  calendar.textContent = 'Add to Calendar';
+  calendar.href = calendarUrl();
+  calendar.target = '_blank';
+  calendar.rel = 'noopener noreferrer';
+  actions.append(questionButton, calendar);
+  const note = document.createElement('p');
+  note.className = 'agenda-action-note';
+  note.textContent = 'Demo actions only. Calendar opens a fictional 90-minute event in Google Calendar for you to review and save.';
+
+  const form = document.createElement('form');
+  form.id = `${item.id}-question-form`;
+  form.className = 'agenda-question';
+  form.hidden = true;
+  const label = document.createElement('label');
+  label.htmlFor = `${item.id}-question`;
+  label.textContent = 'Your question';
+  const textarea = document.createElement('textarea');
+  textarea.id = label.htmlFor;
+  textarea.rows = 4;
+  textarea.required = true;
+  const emailNote = document.createElement('p');
+  emailNote.id = `${item.id}-email-note`;
+  emailNote.className = 'agenda-action-note';
+  emailNote.textContent = 'Recipient: board-demo@example.invalid (fictional, non-deliverable). This opens a draft in your email app; it does not send a message to a real Community Board.';
+  textarea.setAttribute('aria-describedby', emailNote.id);
+  const continueButton = document.createElement('button');
+  continueButton.type = 'submit';
+  continueButton.className = 'agenda-action';
+  continueButton.textContent = 'Continue to email app';
+  form.append(label, textarea, emailNote, continueButton);
+  questionButton.addEventListener('click', () => {
+    form.hidden = !form.hidden;
+    questionButton.setAttribute('aria-expanded', String(!form.hidden));
+    if (!form.hidden) textarea.focus();
+  });
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const question = textarea.value.trim();
+    if (!question) {
+      textarea.setCustomValidity('Please enter a question.');
+      textarea.reportValidity();
+      return;
+    }
+    const subject = `[FICTIONAL DEMO] ${dateFormat.format(new Date(housingMeeting.start))} — ${item.title} — ${item.location}`;
+    const body = `Fictional demo only — not for a real Community Board.\n\nMeeting: Housing & Neighborhood Improvements\nDate: ${dateFormat.format(new Date(housingMeeting.start))}, ${timeFormat.format(new Date(housingMeeting.start))} (New York time)\nAgenda item: ${item.title}\nLocation: ${item.location}\n\nMy question:\n${question}`;
+    window.location.href = `mailto:board-demo@example.invalid?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  });
+  textarea.addEventListener('input', () => textarea.setCustomValidity(''));
+  expanded.append(impactHeading, impact, actions, note, form);
+  row.append(summary, expanded);
+  return row;
+}
+
+function renderMeetingDetail() {
+  document.querySelector('#detail-meeting-meta').textContent =
+    `${dateFormat.format(new Date(housingMeeting.start))} · ${timeFormat.format(new Date(housingMeeting.start))} (New York time) · ${housingMeeting.board}`;
+  document.querySelector('#detail-meeting-preview').textContent = housingMeeting.preview;
+  const selected = Array.from(interestsDropdown.querySelectorAll('input:checked'), (input) => input.value);
+  const matching = housingMeeting.agenda.filter((item) => selected.includes(item.category));
+  const other = housingMeeting.agenda.filter((item) => !selected.includes(item.category));
+  const agenda = document.querySelector('#meeting-agenda');
+  agenda.replaceChildren();
+
+  function appendItems(items) {
+    items.forEach((item) => {
+      if (!agendaRows.has(item.id)) agendaRows.set(item.id, createAgendaRow(item));
+      agenda.append(agendaRows.get(item.id));
+    });
+  }
+
+  appendItems(matching);
+  if (other.length > 0) {
+    const divider = document.createElement('p');
+    divider.className = 'agenda-divider';
+    divider.textContent = 'Other agenda items';
+    agenda.append(divider);
+    appendItems(other);
+  }
+}
+
+// Screens share one document; the navbar, footer, and current page stay in place.
 function showScreen(screen) {
-  const home = document.querySelector('#home-screen');
-  const upcoming = document.querySelector('#upcoming-screen');
-  const showUpcoming = screen === 'upcoming';
-  home.hidden = showUpcoming;
-  upcoming.hidden = !showUpcoming;
+  document.querySelectorAll('main').forEach((main) => {
+    main.hidden = main.id !== `${screen}-screen`;
+  });
   interestsDropdown.open = false;
-  const heading = (showUpcoming ? upcoming : home).querySelector('h1');
+  const heading = document.querySelector(`#${screen}-screen h1`);
   heading.tabIndex = -1;
   heading.focus({ preventScroll: true });
   window.scrollTo(0, 0);
@@ -229,6 +400,10 @@ document.querySelector('.app-name').addEventListener('click', (event) => {
   event.preventDefault();
   showScreen('home');
 });
-interestsDropdown.addEventListener('change', renderUpcomingMeetings);
+document.querySelector('#back-to-upcoming').addEventListener('click', () => showScreen('upcoming'));
+interestsDropdown.addEventListener('change', () => {
+  renderUpcomingMeetings();
+  renderMeetingDetail();
+});
 renderUpcomingMeetings();
 renderPagination();
