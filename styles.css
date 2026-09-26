@@ -309,7 +309,158 @@ h2 {
   color: #777;
 }
 
+/* Upcoming meetings: separate styles leave the home cards unchanged. */
+.upcoming-screen {
+  max-width: 1300px;
+  width: 88%;
+  margin: 0 auto;
+  padding: 4rem 1.5rem;
+}
+
+.upcoming-screen h1 {
+  margin-left: 0;
+}
+
+.upcoming-intro {
+  margin: 1rem 0;
+  color: #555;
+}
+
+.sample-notice {
+  color: #666;
+  font-size: 0.875rem;
+  margin: 0 0 2rem;
+}
+
+.upcoming-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 1rem;
+}
+
+.upcoming-row {
+  position: relative;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 150px minmax(0, 1fr);
+  gap: 2rem;
+  padding: 1.75rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #fff;
+  color: #222;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 180ms ease, border-color 180ms ease;
+}
+
+.upcoming-row::after {
+  content: "";
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  width: 0.4rem;
+  height: 0.4rem;
+  border-top: 1px solid #666;
+  border-right: 1px solid #666;
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.meeting-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.25rem;
+  margin-top: 2rem;
+  color: #666;
+}
+
+.page-control {
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  min-width: 2rem;
+  min-height: 44px;
+  padding: 0.25rem;
+  cursor: pointer;
+}
+
+.page-control[aria-current="page"] {
+  font-weight: 700;
+  color: #222;
+}
+
+.page-control:enabled:hover,
+.page-control:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.page-control:disabled {
+  color: #aaa;
+  cursor: default;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.upcoming-row:hover,
+.upcoming-row:focus-visible {
+  background: #f2f5f3;
+  border-color: #89958c;
+}
+
+.upcoming-date,
+.upcoming-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.upcoming-date span:first-child {
+  font-weight: 700;
+}
+
+.upcoming-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.upcoming-board,
+.upcoming-preview,
+.upcoming-categories {
+  color: #555;
+}
+
+.upcoming-board,
+.upcoming-categories,
+.upcoming-count,
+.interest-match {
+  font-size: 0.875rem;
+}
+
+.interest-match {
+  padding: 0.25rem 0.5rem;
+  background: #e8eeea;
+  color: #34483a;
+  border-radius: 4px;
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .upcoming-row,
   .interests summary::after,
   .meeting-card,
   .weight-word > span,
@@ -335,11 +486,18 @@ h2 {
     max-width: calc(100vw - 2rem);
   }
 
-  .home {
+  .home,
+  .upcoming-screen {
     padding: 2.5rem 1rem;
   }
 
   .meeting-options {
     grid-template-columns: 1fr;
+  }
+
+  .upcoming-row {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 1.25rem;
   }
 }

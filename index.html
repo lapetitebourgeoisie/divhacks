@@ -30,7 +30,7 @@
       </nav>
     </header>
 
-    <main class="home">
+    <main class="home" id="home-screen">
       <h1>Take part in shaping your neighborhood !</h1>
       <p class="intro">Did you know? Many New Yorkers are still disconnected 
         from their local Community Boards. Stay informed about the decisions happening
@@ -38,7 +38,7 @@
 
       <section aria-labelledby="explore-heading">
         <h2 id="explore-heading">Start now:</h2>
-        <!-- Buttons are ready for navigation in a later increment. -->
+        <!-- Past Meetings remains a placeholder for a later increment. -->
         <div class="meeting-options">
           <article class="meeting-card meeting-card--upcoming">
             <h3><button type="button" aria-describedby="upcoming-description">Upcoming Meetings</button></h3>
@@ -51,6 +51,15 @@
         </div>
       </section>
       <p class="location-context">Your area: Community Board [TBD] · Neighborhood [TBD] <button class="text-control change-location" type="button">Change</button></p>
+    </main>
+    <main class="upcoming-screen" id="upcoming-screen" hidden>
+      <h1 tabindex="-1">Upcoming Meetings</h1>
+      <p class="location-context">Your area: Community Board [TBD] · Neighborhood [TBD] <button class="text-control change-location" type="button">Change</button></p>
+      <p class="upcoming-intro">Explore upcoming meetings and agenda items for your area.</p>
+      <p class="sample-notice">Demo preview — all meetings and agenda items below are fictional samples. Times are shown in New York time.</p>
+      <ol class="upcoming-list" id="upcoming-list" aria-label="Upcoming meetings, soonest first"></ol>
+      <nav class="meeting-pagination" id="meeting-pagination" aria-label="Meeting pages"></nav>
+      <p class="visually-hidden" id="page-status" role="status"></p>
     </main>
     <footer class="language-selector" aria-label="Language selection">
       <button class="text-control language-option" type="button" lang="en" aria-current="true">English</button>
