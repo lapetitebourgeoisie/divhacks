@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Board Brief — Community Board Meetings</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="navbar" aria-label="Main navigation">
+        <!-- Temporary app name; easy to replace later. -->
+        <a class="app-name" href="index.html">Board Brief</a>
+
+        <div class="nav-controls">
+          <details class="interests">
+            <summary>Interests</summary>
+            <div class="interests-panel">
+              <fieldset>
+                <legend>Your interests</legend>
+                <label><input type="checkbox" value="Housing" checked> Housing</label>
+                <label><input type="checkbox" value="Transportation" checked> Transportation</label>
+                <label><input type="checkbox" value="Licensing"> Licensing</label>
+              </fieldset>
+            </div>
+          </details>
+          <span class="profile-box" aria-label="Demo profile: demo_user">demo_user</span>
+        </div>
+      </nav>
+    </header>
+
+    <main class="home">
+      <h1>Take part in shaping your neighborhood !</h1>
+      <p class="intro">Did you know? Many New Yorkers are still disconnected 
+        from their local Community Boards. Stay informed about the decisions happening
+         around you, and become a driving force in your community.</p>
+
+      <section aria-labelledby="explore-heading">
+        <h2 id="explore-heading">Start now:</h2>
+        <!-- These cards will become navigation links in a later increment. -->
+        <div class="meeting-options">
+          <article class="meeting-card">
+            <h3>Upcoming Meetings</h3>
+            <p>See what's being proposed and add your weight to the discussion.</p>
+          </article>
+          <article class="meeting-card">
+            <h3>Past Meetings</h3>
+            <p>See what was decided, and what happens next!</p>
+          </article>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
