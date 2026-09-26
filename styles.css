@@ -5,6 +5,9 @@
 
 body {
   margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
   color: #222;
   background: #fafafa;
   font-family: Arial, Helvetica, sans-serif;
@@ -71,6 +74,28 @@ a {
 
 .interests summary {
   cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.interests summary::-webkit-details-marker {
+  display: none;
+}
+
+.interests summary::after {
+  content: "";
+  width: 0.45rem;
+  height: 0.45rem;
+  border-right: 1px solid currentColor;
+  border-bottom: 1px solid currentColor;
+  transform: translateY(-2px) rotate(45deg);
+  transition: transform 180ms ease;
+}
+
+.interests[open] summary::after {
+  transform: translateY(2px) rotate(225deg);
 }
 
 .interests-panel {
@@ -143,21 +168,154 @@ h2 {
 }
 
 .meeting-card {
+  position: relative;
   padding: 2rem;
   background: #fff;
   border: 1px solid #ccc;
   border-radius: 8px;
   min-height: 220px;
+  transition: background-color 200ms ease;
 }
 
 .meeting-card h3 {
   margin: 0 0 0.75rem;
   font-size: 1.5rem;
+  font-weight: 700;
 }
 
 .meeting-card p {
   margin: 0;
   color: #555;
+  font-weight: 400;
+  transition: color 200ms ease;
+}
+
+/* Stretch the native button's click target over its entire card. */
+.meeting-card button {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: inherit;
+  cursor: pointer;
+}
+
+.meeting-card button::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 8px;
+}
+
+.meeting-card button:focus-visible {
+  outline: none;
+}
+
+.meeting-card button:focus-visible::after {
+  outline: 3px solid #444;
+  outline-offset: 4px;
+}
+
+.meeting-card--upcoming:hover,
+.meeting-card--upcoming:focus-within {
+  background-color: #e8eeea;
+}
+
+.meeting-card--past:hover,
+.meeting-card--past:focus-within {
+  background-color: #eeebe6;
+}
+
+/* Both weights share a fixed word-sized grid cell, including while invisible. */
+.weight-word {
+  display: inline-grid;
+  vertical-align: baseline;
+  white-space: nowrap;
+}
+
+.weight-word > span {
+  grid-area: 1 / 1;
+  transition: opacity 200ms ease;
+}
+
+.weight-regular {
+  font-weight: 400;
+}
+
+.weight-bold {
+  font-weight: 700;
+}
+
+.meeting-card h3 .weight-regular,
+.meeting-card p .weight-bold,
+.meeting-card:is(:hover, :focus-within) h3 .weight-bold,
+.meeting-card:is(:hover, :focus-within) p .weight-regular {
+  opacity: 0;
+}
+
+.meeting-card:is(:hover, :focus-within) h3 .weight-regular,
+.meeting-card:is(:hover, :focus-within) p .weight-bold {
+  opacity: 1;
+}
+
+.meeting-card:is(:hover, :focus-within) p {
+  color: #222;
+}
+
+.location-context {
+  margin: 1.5rem 0 0;
+  color: #666;
+  font-size: 0.875rem;
+}
+
+.text-control {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  text-underline-offset: 3px;
+}
+
+.text-control:hover,
+.text-control:focus-visible {
+  text-decoration: underline;
+}
+
+.change-location {
+  margin-left: 0.5rem;
+}
+
+/* Normal document flow keeps this utility from covering content on small screens. */
+.language-selector {
+  margin-top: auto;
+  padding: 1rem 1.5rem;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.4rem;
+  color: #555;
+  font-size: 0.875rem;
+}
+
+.language-option[aria-current="true"] {
+  font-weight: 700;
+  color: #222;
+}
+
+.language-divider {
+  color: #777;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .interests summary::after,
+  .meeting-card,
+  .weight-word > span,
+  .meeting-card p {
+    transition: none;
+  }
 }
 
 /* Stack cards and give navigation room on smaller screens. */

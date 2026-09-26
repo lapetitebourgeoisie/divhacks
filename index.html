@@ -38,18 +38,24 @@
 
       <section aria-labelledby="explore-heading">
         <h2 id="explore-heading">Start now:</h2>
-        <!-- These cards will become navigation links in a later increment. -->
+        <!-- Buttons are ready for navigation in a later increment. -->
         <div class="meeting-options">
-          <article class="meeting-card">
-            <h3>Upcoming Meetings</h3>
-            <p>See what's being proposed and add your weight to the discussion.</p>
+          <article class="meeting-card meeting-card--upcoming">
+            <h3><button type="button" aria-describedby="upcoming-description">Upcoming Meetings</button></h3>
+            <p id="upcoming-description">See what's being proposed and add your weight to the discussion.</p>
           </article>
-          <article class="meeting-card">
-            <h3>Past Meetings</h3>
-            <p>See what was decided, and what happens next!</p>
+          <article class="meeting-card meeting-card--past">
+            <h3><button type="button" aria-describedby="past-description">Past Meetings</button></h3>
+            <p id="past-description">See what was decided, and what happens next!</p>
           </article>
         </div>
       </section>
+      <p class="location-context">Your area: Community Board [TBD] · Neighborhood [TBD] <button class="text-control change-location" type="button">Change</button></p>
     </main>
+    <footer class="language-selector" aria-label="Language selection">
+      <button class="text-control language-option" type="button" lang="en" aria-current="true">English</button>
+      <span class="language-divider" aria-hidden="true">/</span>
+      <button class="text-control language-option" type="button" lang="es">Español</button>
+    </footer>
   </body>
 </html>
