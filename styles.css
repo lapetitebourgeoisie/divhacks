@@ -582,6 +582,12 @@ h2 {
   overflow-wrap: anywhere;
 }
 
+.agenda-action:disabled {
+  color: #777;
+  cursor: default;
+  text-decoration: none;
+}
+
 .agenda-question {
   margin-top: 1.25rem;
 }

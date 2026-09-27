@@ -38,7 +38,7 @@
 
       <section aria-labelledby="explore-heading">
         <h2 id="explore-heading">Start now:</h2>
-        <!-- Past Meetings remains a placeholder for a later increment. -->
+        <!-- Each card opens its meeting list within this page. -->
         <div class="meeting-options">
           <article class="meeting-card meeting-card--upcoming">
             <h3><button type="button" aria-describedby="upcoming-description">Upcoming Meetings</button></h3>
@@ -61,6 +61,13 @@
       <nav class="meeting-pagination" id="meeting-pagination" aria-label="Meeting pages"></nav>
       <p class="visually-hidden" id="page-status" role="status"></p>
     </main>
+    <main class="upcoming-screen" id="past-screen" hidden>
+      <h1 tabindex="-1">Past Meetings</h1>
+      <p class="location-context">Your area: Community Board [TBD] · Neighborhood [TBD] <button class="text-control change-location" type="button">Change</button></p>
+      <p class="upcoming-intro">Explore past meetings and the decisions made for your area.</p>
+      <p class="sample-notice">Demo preview — all meetings and decisions below are fictional samples, not verified Community Board records.</p>
+      <ol class="upcoming-list" id="past-list" aria-label="Past meetings, most recent first"></ol>
+    </main>
     <main class="meeting-detail" id="meeting-detail-screen" hidden>
       <button class="text-control meeting-back" id="back-to-upcoming" type="button">← Upcoming Meetings</button>
       <header class="meeting-detail-header">
@@ -72,6 +79,19 @@
       <section aria-labelledby="agenda-heading">
         <h2 id="agenda-heading">What's being discussed</h2>
         <div id="meeting-agenda"></div>
+      </section>
+    </main>
+    <main class="meeting-detail" id="past-detail-screen" hidden>
+      <button class="text-control meeting-back" id="back-to-past" type="button">← Past Meetings</button>
+      <header class="meeting-detail-header">
+        <h1 id="past-detail-title" tabindex="-1"></h1>
+        <p id="past-detail-meta" class="detail-meta"></p>
+        <p id="past-detail-preview" class="detail-preview"></p>
+        <p class="sample-notice">Fictional demo meeting — all proposals, decisions, and addresses below are illustrative, not verified Community Board records. Original source documents are not available.</p>
+      </header>
+      <section aria-labelledby="past-agenda-heading">
+        <h2 id="past-agenda-heading">What was considered and decided</h2>
+        <div id="past-meeting-agenda"></div>
       </section>
     </main>
     <footer class="language-selector" aria-label="Language selection">
