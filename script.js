@@ -54,36 +54,36 @@ const sampleMeetings = [
     id: 'demo-housing-streets',
     title: 'Housing and street improvements',
     start: '2026-10-06T18:30:00-04:00',
-    board: 'Community Board [TBD]',
-    preview: 'Discuss a sample affordable-housing proposal and safer crossings near a neighborhood school.',
+    board: 'Manhattan Community Board 8',
+    preview: 'Discuss an affordable housing proposal and safer crossings near a neighborhood school.',
     agendaCategories: ['Housing', 'Housing', 'Transportation'],
   },
   {
     id: 'demo-bus-business',
     title: 'Bus access and local business applications',
     start: '2026-10-13T19:00:00-04:00',
-    board: 'Community Board [TBD]',
-    preview: 'Review sample bus-stop accessibility improvements and a restaurant license application.',
+    board: 'Manhattan Community Board 8',
+    preview: 'Review bus stop accessibility improvements and a restaurant license application.',
     agendaCategories: ['Transportation', 'Licensing'],
   },
   {
     id: 'demo-licensing-review',
     title: 'Neighborhood licensing review',
     start: '2026-10-22T18:00:00-04:00',
-    board: 'Community Board [TBD]',
-    preview: 'Consider two fictional license applications from neighborhood businesses.',
+    board: 'Manhattan Community Board 8',
+    preview: 'Consider two license applications from neighborhood businesses.',
     agendaCategories: ['Licensing', 'Licensing'],
   },
 ];
 
 // Lightweight list-only samples: one category entry represents one agenda item.
 const sampleTopics = [
-  ['Housing repair priorities', 'Discuss fictional building repair and tenant-support proposals.', ['Housing', 'Housing']],
-  ['Safer neighborhood journeys', 'Review sample crossing improvements and bus-stop access.', ['Transportation', 'Transportation']],
-  ['Local license applications', 'Consider fictional restaurant and sidewalk-cafe applications.', ['Licensing', 'Licensing']],
-  ['Housing and local business review', 'Review sample housing improvements and a business license application.', ['Housing', 'Licensing']],
-  ['Street access and licensing', 'Discuss fictional curb access changes and local license applications.', ['Transportation', 'Licensing', 'Licensing']],
-  ['Neighborhood planning discussion', 'Review sample housing, street safety, and business license proposals.', ['Housing', 'Transportation', 'Licensing']],
+  ['Housing repair priorities', 'Discuss proposals for building repairs and tenant support.', ['Housing', 'Housing']],
+  ['Safer neighborhood journeys', 'Review crossing improvements and bus stop access.', ['Transportation', 'Transportation']],
+  ['Local license applications', 'Consider restaurant and sidewalk café applications.', ['Licensing', 'Licensing']],
+  ['Housing and local business review', 'Review housing improvements and a business license application.', ['Housing', 'Licensing']],
+  ['Street access and licensing', 'Discuss curb access changes and local license applications.', ['Transportation', 'Licensing', 'Licensing']],
+  ['Neighborhood planning discussion', 'Review housing, street safety, and business license proposals.', ['Housing', 'Transportation', 'Licensing']],
 ];
 
 for (let index = 0; index < 24; index += 1) {
@@ -96,7 +96,7 @@ for (let index = 0; index < 24; index += 1) {
   sampleMeetings.push({
     id: `demo-list-${String(index + 4).padStart(2, '0')}`,
     start: `${dateString}T${time}${offset}`,
-    board: 'Community Board [TBD]',
+    board: 'Manhattan Community Board 8',
     title,
     preview,
     agendaCategories: [...categories],
@@ -112,37 +112,37 @@ const pastMeetings = [
   {
     id: 'demo-past-housing-streets',
     start: '2026-09-22T18:30:00-04:00',
-    board: 'Community Board [TBD]',
+    board: 'Manhattan Community Board 8',
     title: 'Housing repairs and safer crossings',
-    preview: 'The board supported a sample housing repair proposal and recommended changes to pedestrian crossings.',
+    preview: 'The board supported a housing repair proposal and recommended changes to pedestrian crossings.',
     decisionCategories: ['Housing', 'Transportation'],
   },
   {
     id: 'demo-past-business-access',
     start: '2026-09-15T19:00:00-04:00',
-    board: 'Community Board [TBD]',
+    board: 'Manhattan Community Board 8',
     title: 'Local businesses and street access',
-    preview: 'The board recommended conditions for two fictional license applications and supported a loading-zone change.',
+    preview: 'The board recommended conditions for two license applications and supported a loading zone change.',
     decisionCategories: ['Licensing', 'Licensing', 'Transportation'],
   },
   {
     id: 'demo-past-licensing',
     start: '2026-09-08T18:00:00-04:00',
-    board: 'Community Board [TBD]',
+    board: 'Manhattan Community Board 8',
     title: 'Neighborhood licensing decisions',
-    preview: 'The board supported one fictional restaurant application and requested revisions to another.',
+    preview: 'The board supported one restaurant application and requested revisions to another.',
     decisionCategories: ['Licensing', 'Licensing'],
   },
 ];
 
 // Twelve lightweight list-only records; the original three retain their IDs.
 const pastSampleTopics = [
-  ['Housing improvements', 'The board recommended revisions to fictional housing repair and affordability proposals.', ['Housing', 'Housing']],
-  ['Street safety decisions', 'The board supported sample crossing improvements and requested a review of bus-stop access.', ['Transportation', 'Transportation']],
-  ['Local licensing review', 'The board recommended conditions for two fictional business license applications.', ['Licensing', 'Licensing']],
-  ['Housing and street access', 'The board supported a sample housing proposal and recommended changes to curb access.', ['Housing', 'Transportation']],
-  ['Businesses and neighborhood access', 'The board reviewed fictional licensing applications and recommended delivery-access changes.', ['Licensing', 'Transportation', 'Licensing']],
-  ['Neighborhood recommendations', 'The board made sample recommendations on housing repairs, pedestrian access, and a business license.', ['Housing', 'Transportation', 'Licensing']],
+  ['Housing improvements', 'The board recommended revisions to housing repair and affordability proposals.', ['Housing', 'Housing']],
+  ['Street safety decisions', 'The board supported crossing improvements and requested a review of bus stop access.', ['Transportation', 'Transportation']],
+  ['Local licensing review', 'The board recommended conditions for two business license applications.', ['Licensing', 'Licensing']],
+  ['Housing and street access', 'The board supported a housing proposal and recommended changes to curb access.', ['Housing', 'Transportation']],
+  ['Businesses and neighborhood access', 'The board reviewed licensing applications and recommended changes to delivery access.', ['Licensing', 'Transportation', 'Licensing']],
+  ['Neighborhood recommendations', 'The board made recommendations on housing repairs, pedestrian access, and a business license.', ['Housing', 'Transportation', 'Licensing']],
 ];
 for (let index = 0; index < 12; index += 1) {
   const date = new Date(Date.UTC(2026, 8, 1 - index * 7));
@@ -150,7 +150,7 @@ for (let index = 0; index < 12; index += 1) {
   pastMeetings.push({
     id: `demo-past-list-${String(index + 4).padStart(2, '0')}`,
     start: `${date.toISOString().slice(0, 10)}T18:30:00-04:00`,
-    board: 'Community Board [TBD]',
+    board: 'Manhattan Community Board 8',
     title,
     preview,
     decisionCategories: [...categories],
@@ -166,7 +166,7 @@ heroPastMeeting.agenda = [
     location: '184 West 96th Street',
     title: 'Proposed affordable housing development',
     description: 'The Community Board reviewed a proposal for a new residential building that would include income-restricted apartments.',
-    decision: 'The Community Board recommended that the proposal move forward, while requesting changes to the building’s street-level design and additional information about the proposed affordable units.',
+    decision: 'The Community Board recommended that the proposal move forward, while requesting changes to the building’s design at street level and additional information about the proposed affordable units.',
     meaning: 'The Board supported the project overall, but raised concerns about parts of the current plan. Its recommendation does not itself authorize construction.',
     next: 'The proposal will continue through the relevant city review process. The agency responsible for the next stage can consider the Community Board’s recommendation when reviewing the project.',
   },
@@ -185,8 +185,8 @@ heroPastMeeting.agenda = [
     category: 'Licensing',
     location: '221 West 100th Street',
     title: 'New restaurant liquor license',
-    description: 'The Community Board reviewed a restaurant’s liquor-license application and proposed evening operating hours.',
-    decision: 'The Community Board recommended support for the application with requested limits on late-evening outdoor activity and a plan for addressing noise concerns.',
+    description: 'The Community Board reviewed a restaurant’s liquor license application and proposed evening operating hours.',
+    decision: 'The Community Board recommended support for the application with requested limits on outdoor activity late in the evening and a plan for addressing noise concerns.',
     meaning: 'The Board’s recommendation described conditions it wanted considered. It did not issue a liquor license.',
     next: 'The licensing authority can review the application and the Board’s recommendation before making its decision.',
   },
@@ -220,7 +220,7 @@ housingMeeting.agenda = [
     category: 'Transportation',
     location: 'Broadway & West 97th Street',
     title: 'Safer intersection redesign',
-    description: 'A street-safety proposal would change the intersection with shorter pedestrian crossings, adjusted curb space, and new loading arrangements.',
+    description: 'A proposal to improve street safety would change the intersection with shorter pedestrian crossings, adjusted curb space, and new loading arrangements.',
   },
   {
     id: 'demo-west-100-license',
@@ -228,7 +228,7 @@ housingMeeting.agenda = [
     category: 'Licensing',
     location: '221 West 100th Street',
     title: 'New restaurant liquor license',
-    description: 'A new restaurant is seeking support for a liquor-license application, including evening operating hours and outdoor seating.',
+    description: 'A new restaurant is seeking support for a liquor license application, including evening operating hours and outdoor seating.',
   },
   {
     id: 'demo-amsterdam-cafe',
@@ -245,28 +245,28 @@ housingMeeting.agendaCategories = housingMeeting.agenda.map((item) => item.categ
 // Rich demo content is limited to the first three meetings in each list.
 sampleMeetings[1].agenda = [
   { id: 'demo-bus-access', category: 'Transportation', location: 'Amsterdam Avenue & West 110th Street', title: 'Bus stop accessibility improvements', description: 'A proposal would redesign the bus stop area to make boarding easier and improve pedestrian access around the intersection.', impact: 'The changes could affect bus riders, pedestrians, curb access, nearby parking, and how easily people with limited mobility can use the stop.' },
-  { id: 'demo-columbus-bike', category: 'Transportation', location: 'Columbus Avenue', title: 'Protected bike lane and loading-zone changes', description: 'The Community Board will review proposed changes to bike-lane protection and commercial loading areas along part of Columbus Avenue.', impact: 'The proposal could change cyclist safety, delivery access, curb space, parking, and traffic patterns along the corridor.' },
+  { id: 'demo-columbus-bike', category: 'Transportation', location: 'Columbus Avenue', title: 'Protected bike lane and loading zone changes', description: 'The Community Board will review proposed changes to protection for bike lanes and commercial loading areas along part of Columbus Avenue.', impact: 'The proposal could change cyclist safety, delivery access, curb space, parking, and traffic patterns along the corridor.' },
   { id: 'demo-amsterdam-267', category: 'Licensing', location: '267 Amsterdam Avenue', title: 'New restaurant liquor license', description: 'A new restaurant is seeking support for a liquor license that would allow alcohol service during its proposed operating hours.', impact: 'Nearby residents and businesses may care about evening activity, noise, operating hours, and the addition of a new neighborhood business.' },
   { id: 'demo-west-109', category: 'Housing', location: '142 West 109th Street', title: 'Residential building renovation', description: 'Plans are being presented for a substantial renovation of an existing residential property, including changes to shared and exterior spaces.', impact: 'The work could affect current residents during construction and change how the property and surrounding block are used afterward.' },
 ];
 sampleMeetings[2].agenda = [
   { id: 'demo-columbus-318', category: 'Licensing', location: '318 Columbus Avenue', title: 'Restaurant liquor license application', description: 'A restaurant is requesting Community Board support for a liquor license and proposed evening operating hours.', impact: 'The application could affect nightlife, noise, local business activity, and residents living near the restaurant.' },
   { id: 'demo-amsterdam-475', category: 'Licensing', location: '475 Amsterdam Avenue', title: 'Sidewalk café application', description: 'A café is proposing an outdoor seating area that would occupy part of the sidewalk during operating hours.', impact: 'Outdoor seating could affect available sidewalk space, accessibility, street activity, and nearby residents and businesses.' },
-  { id: 'demo-west-86', category: 'Transportation', location: 'West 86th Street', title: 'Curbside loading-zone proposal', description: 'A proposal would reorganize part of the curb to create dedicated loading space for deliveries and passenger pickup.', impact: 'The change could affect parking availability, deliveries, traffic flow, and double-parking on the block.' },
+  { id: 'demo-west-86', category: 'Transportation', location: 'West 86th Street', title: 'Curbside loading zone proposal', description: 'A proposal would reorganize part of the curb to create dedicated loading space for deliveries and passenger pickup.', impact: 'The change could affect parking availability, deliveries, traffic flow, and double parking on the block.' },
   { id: 'demo-west-88', category: 'Housing', location: '205 West 88th Street', title: 'Residential conversion proposal', description: 'A property owner is presenting plans to convert existing space in the building into additional residential units.', impact: 'The proposal could add housing while changing the use and density of the existing property.' },
 ];
 
 pastMeetings[1].agenda = [
-  { id: 'demo-past-business-license', category: 'Licensing', location: '267 Amsterdam Avenue', title: 'Restaurant liquor license application', description: 'The Board considered a fictional restaurant application and proposed evening hours.', decision: 'The Board recommended support with a request for earlier outdoor closing hours and a clear process for responding to noise concerns.', meaning: 'The recommendation expressed the Board’s preferred conditions. It did not grant a liquor license.', next: 'The applicant can provide updated information for consideration by the responsible licensing authority.' },
-  { id: 'demo-past-business-cafe', category: 'Licensing', location: 'Columbus Avenue', title: 'Outdoor café seating', description: 'The Board reviewed a proposed seating layout outside a fictional café.', decision: 'The Board requested a revised plan showing a wider pedestrian route before offering further recommendations.', meaning: 'The Board sought clarification about accessibility rather than authorizing sidewalk use.', next: 'The applicant can revise the layout for review through the relevant city process.' },
+  { id: 'demo-past-business-license', category: 'Licensing', location: '267 Amsterdam Avenue', title: 'Restaurant liquor license application', description: 'The Board considered a restaurant application and proposed evening hours.', decision: 'The Board recommended support with a request for earlier outdoor closing hours and a clear process for responding to noise concerns.', meaning: 'The recommendation expressed the Board’s preferred conditions. It did not grant a liquor license.', next: 'The applicant can provide updated information for consideration by the responsible licensing authority.' },
+  { id: 'demo-past-business-cafe', category: 'Licensing', location: 'Columbus Avenue', title: 'Outdoor café seating', description: 'The Board reviewed a proposed seating layout outside a café.', decision: 'The Board requested a revised plan showing a wider pedestrian route before offering further recommendations.', meaning: 'The Board sought clarification about accessibility rather than authorizing sidewalk use.', next: 'The applicant can revise the layout for review through the relevant city process.' },
   { id: 'demo-past-business-loading', category: 'Transportation', location: 'West 104th Street', title: 'Commercial loading space', description: 'The Board considered changing a section of curb to accommodate deliveries.', decision: 'The Board recommended evaluating a limited loading area and monitoring its effect on nearby access.', meaning: 'The recommendation identified a possible approach. It did not change parking rules or install a loading zone.', next: 'The responsible agency can assess the proposal and determine whether further design or outreach is needed.' },
-  { id: 'demo-past-business-housing', category: 'Housing', location: '142 West 109th Street', title: 'Residential building repairs', description: 'The Board discussed a fictional repair plan affecting shared areas in an occupied building.', decision: 'The Board requested clearer information about construction scheduling and resident access.', meaning: 'The request highlighted resident concerns and did not constitute approval of building work.', next: 'The property owner can provide revised plans and seek any required reviews.' },
+  { id: 'demo-past-business-housing', category: 'Housing', location: '142 West 109th Street', title: 'Residential building repairs', description: 'The Board discussed a repair plan affecting shared areas in an occupied building.', decision: 'The Board requested clearer information about construction scheduling and resident access.', meaning: 'The request highlighted resident concerns and did not constitute approval of building work.', next: 'The property owner can provide revised plans and seek any required reviews.' },
 ];
 pastMeetings[2].agenda = [
-  { id: 'demo-past-review-restaurant', category: 'Licensing', location: '318 Columbus Avenue', title: 'Restaurant operating hours', description: 'The Board reviewed a fictional restaurant’s license application and evening service plans.', decision: 'The Board recommended support with a request for a written noise-management plan.', meaning: 'The recommendation was advisory. A separate licensing decision would still be needed.', next: 'The application and recommendation can be considered by the relevant licensing authority.' },
-  { id: 'demo-past-review-sidewalk', category: 'Licensing', location: '475 Amsterdam Avenue', title: 'Sidewalk café layout', description: 'The Board considered a fictional outdoor seating proposal near a busy pedestrian route.', decision: 'The Board requested fewer tables and clearer drawings of the remaining sidewalk space.', meaning: 'The Board identified changes it wanted reviewed, without granting permission for outdoor seating.', next: 'The café can submit revised information through the applicable review process.' },
-  { id: 'demo-past-review-crossing', category: 'Transportation', location: 'West 86th Street', title: 'Pedestrian crossing improvements', description: 'The Board discussed a sample proposal to improve visibility at a crossing.', decision: 'The Board recommended a site assessment and consideration of curb adjustments.', meaning: 'The recommendation called for further evaluation rather than committing the city to construction.', next: 'The responsible agency can examine conditions and identify any feasible changes.' },
-  { id: 'demo-past-review-conversion', category: 'Housing', location: '205 West 88th Street', title: 'Residential conversion proposal', description: 'The Board considered a fictional plan to convert existing space into additional apartments.', decision: 'The Board requested more information about the proposed units and effects on existing occupants.', meaning: 'The request did not authorize the conversion or determine its compliance with city requirements.', next: 'The applicant can supply additional information for the next stage of review.' },
+  { id: 'demo-past-review-restaurant', category: 'Licensing', location: '318 Columbus Avenue', title: 'Restaurant operating hours', description: 'The Board reviewed a restaurant’s license application and evening service plans.', decision: 'The Board recommended support with a request for a written plan to manage noise.', meaning: 'The recommendation was advisory. A separate licensing decision would still be needed.', next: 'The application and recommendation can be considered by the relevant licensing authority.' },
+  { id: 'demo-past-review-sidewalk', category: 'Licensing', location: '475 Amsterdam Avenue', title: 'Sidewalk café layout', description: 'The Board considered an outdoor seating proposal near a busy pedestrian route.', decision: 'The Board requested fewer tables and clearer drawings of the remaining sidewalk space.', meaning: 'The Board identified changes it wanted reviewed, without granting permission for outdoor seating.', next: 'The café can submit revised information through the applicable review process.' },
+  { id: 'demo-past-review-crossing', category: 'Transportation', location: 'West 86th Street', title: 'Pedestrian crossing improvements', description: 'The Board discussed a proposal to improve visibility at a crossing.', decision: 'The Board recommended a site assessment and consideration of curb adjustments.', meaning: 'The recommendation called for further evaluation rather than committing the city to construction.', next: 'The responsible agency can examine conditions and identify any feasible changes.' },
+  { id: 'demo-past-review-conversion', category: 'Housing', location: '205 West 88th Street', title: 'Residential conversion proposal', description: 'The Board considered a plan to convert existing space into additional apartments.', decision: 'The Board requested more information about the proposed units and effects on existing occupants.', meaning: 'The request did not authorize the conversion or determine its compliance with city requirements.', next: 'The applicant can supply additional information for the next stage of review.' },
 ];
 
 // Derived list counts reflect the richer content; existing dates/titles stay intact.
@@ -399,7 +399,7 @@ function renderMeetingRows(list, meetings, isPast = false) {
     if (matchCount > 0) {
       const indicator = document.createElement('span');
       indicator.className = 'interest-match';
-      indicator.textContent = `Matches your interests — ${matches.join(' · ')}`;
+      indicator.textContent = `Matches your interests: ${matches.join(' · ')}`;
       content.append(indicator);
     }
     button.append(date, content);
@@ -504,7 +504,7 @@ function createAgendaRow(item, isPast = false, meeting) {
     source.textContent = 'View original source ↗';
     const sourceNote = document.createElement('p');
     sourceNote.className = 'agenda-action-note';
-    sourceNote.textContent = 'Demo-source placeholder — no original document exists for this fictional item.';
+    sourceNote.textContent = 'Source unavailable in prototype';
     expanded.append(source, sourceNote);
     row.append(summary, expanded);
     return row;
@@ -531,7 +531,7 @@ function createAgendaRow(item, isPast = false, meeting) {
   actions.append(questionButton, calendar);
   const note = document.createElement('p');
   note.className = 'agenda-action-note';
-  note.textContent = 'Demo actions only. Calendar opens a fictional 90-minute event in Google Calendar for you to review and save.';
+  note.textContent = 'Opens a 90-minute event in Google Calendar for you to review and save.';
 
   const form = document.createElement('form');
   form.id = `${item.id}-question-form`;
@@ -547,7 +547,7 @@ function createAgendaRow(item, isPast = false, meeting) {
   const emailNote = document.createElement('p');
   emailNote.id = `${item.id}-email-note`;
   emailNote.className = 'agenda-action-note';
-  emailNote.textContent = 'Recipient: board-demo@example.invalid (fictional, non-deliverable). This opens a draft in your email app; it does not send a message to a real Community Board.';
+  emailNote.textContent = 'Recipient: board-demo@example.invalid (not a working address). Opens a draft in your email app. No message is sent to a Community Board.';
   textarea.setAttribute('aria-describedby', emailNote.id);
   const continueButton = document.createElement('button');
   continueButton.type = 'submit';
