@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Board Brief — Community Board Meetings</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="translations.js" defer></script>
     <script src="script.js" defer></script>
   </head>
   <body>
@@ -67,6 +68,8 @@
       <p class="upcoming-intro">Explore past meetings and the decisions made for your area.</p>
       <p class="sample-notice">Demo preview — all meetings and decisions below are fictional samples, not verified Community Board records.</p>
       <ol class="upcoming-list" id="past-list" aria-label="Past meetings, most recent first"></ol>
+      <nav class="meeting-pagination" id="past-pagination" aria-label="Past meeting pages"></nav>
+      <p class="visually-hidden" id="past-page-status" role="status"></p>
     </main>
     <main class="meeting-detail" id="meeting-detail-screen" hidden>
       <button class="text-control meeting-back" id="back-to-upcoming" type="button">← Upcoming Meetings</button>

@@ -3,29 +3,34 @@ const interestsDropdown = document.querySelector('.interests');
 
 // Reserve each word's width in both weights so hover never changes line breaks.
 // Crossfade the two layers instead of resizing the text. Only one is read aloud.
-document.querySelectorAll('.meeting-card button, .meeting-card p').forEach((text) => {
-  const parts = text.textContent.split(/(\s+)/);
-  text.replaceChildren();
+const homeCopy = new Map(Array.from(document.querySelectorAll('.meeting-card button, .meeting-card p'),
+  element => [element, element.textContent]));
+function renderHomeTypography() {
+  homeCopy.forEach((english, text) => {
+    const parts = translate(english).split(/(\s+)/);
+    text.replaceChildren();
 
-  parts.forEach((part) => {
-    if (!part.trim()) {
-      text.append(document.createTextNode(part));
-      return;
-    }
+    parts.forEach((part) => {
+      if (!part.trim()) {
+        text.append(document.createTextNode(part));
+        return;
+      }
 
-    const word = document.createElement('span');
-    word.className = 'weight-word';
-    const regular = document.createElement('span');
-    regular.className = 'weight-regular';
-    regular.textContent = part;
-    const bold = document.createElement('span');
-    bold.className = 'weight-bold';
-    bold.textContent = part;
-    bold.setAttribute('aria-hidden', 'true');
-    word.append(regular, bold);
-    text.append(word);
+      const word = document.createElement('span');
+      word.className = 'weight-word';
+      const regular = document.createElement('span');
+      regular.className = 'weight-regular';
+      regular.textContent = part;
+      const bold = document.createElement('span');
+      bold.className = 'weight-bold';
+      bold.textContent = part;
+      bold.setAttribute('aria-hidden', 'true');
+      word.append(regular, bold);
+      text.append(word);
+    });
   });
-});
+}
+renderHomeTypography();
 
 // Close the panel when clicking elsewhere on the page.
 document.addEventListener('click', (event) => {
@@ -100,6 +105,7 @@ for (let index = 0; index < 24; index += 1) {
 
 const meetingsPerPage = 3;
 let currentPage = 1;
+let pastPage = 1;
 
 // Separate fictional past records; each category entry represents one decision.
 const pastMeetings = [
@@ -128,6 +134,28 @@ const pastMeetings = [
     decisionCategories: ['Licensing', 'Licensing'],
   },
 ];
+
+// Twelve lightweight list-only records; the original three retain their IDs.
+const pastSampleTopics = [
+  ['Housing improvements', 'The board recommended revisions to fictional housing repair and affordability proposals.', ['Housing', 'Housing']],
+  ['Street safety decisions', 'The board supported sample crossing improvements and requested a review of bus-stop access.', ['Transportation', 'Transportation']],
+  ['Local licensing review', 'The board recommended conditions for two fictional business license applications.', ['Licensing', 'Licensing']],
+  ['Housing and street access', 'The board supported a sample housing proposal and recommended changes to curb access.', ['Housing', 'Transportation']],
+  ['Businesses and neighborhood access', 'The board reviewed fictional licensing applications and recommended delivery-access changes.', ['Licensing', 'Transportation', 'Licensing']],
+  ['Neighborhood recommendations', 'The board made sample recommendations on housing repairs, pedestrian access, and a business license.', ['Housing', 'Transportation', 'Licensing']],
+];
+for (let index = 0; index < 12; index += 1) {
+  const date = new Date(Date.UTC(2026, 8, 1 - index * 7));
+  const [title, preview, categories] = pastSampleTopics[index % pastSampleTopics.length];
+  pastMeetings.push({
+    id: `demo-past-list-${String(index + 4).padStart(2, '0')}`,
+    start: `${date.toISOString().slice(0, 10)}T18:30:00-04:00`,
+    board: 'Community Board [TBD]',
+    title,
+    preview,
+    decisionCategories: [...categories],
+  });
+}
 
 // Fictional outcomes for the first Past meeting, kept in a stable source order.
 const heroPastMeeting = pastMeetings[0];
@@ -214,6 +242,45 @@ housingMeeting.agenda = [
 // Keep list counts consistent with the actual four-item demo agenda.
 housingMeeting.agendaCategories = housingMeeting.agenda.map((item) => item.category);
 
+// Rich demo content is limited to the first three meetings in each list.
+sampleMeetings[1].agenda = [
+  { id: 'demo-bus-access', category: 'Transportation', location: 'Amsterdam Avenue & West 110th Street', title: 'Bus stop accessibility improvements', description: 'A proposal would redesign the bus stop area to make boarding easier and improve pedestrian access around the intersection.', impact: 'The changes could affect bus riders, pedestrians, curb access, nearby parking, and how easily people with limited mobility can use the stop.' },
+  { id: 'demo-columbus-bike', category: 'Transportation', location: 'Columbus Avenue', title: 'Protected bike lane and loading-zone changes', description: 'The Community Board will review proposed changes to bike-lane protection and commercial loading areas along part of Columbus Avenue.', impact: 'The proposal could change cyclist safety, delivery access, curb space, parking, and traffic patterns along the corridor.' },
+  { id: 'demo-amsterdam-267', category: 'Licensing', location: '267 Amsterdam Avenue', title: 'New restaurant liquor license', description: 'A new restaurant is seeking support for a liquor license that would allow alcohol service during its proposed operating hours.', impact: 'Nearby residents and businesses may care about evening activity, noise, operating hours, and the addition of a new neighborhood business.' },
+  { id: 'demo-west-109', category: 'Housing', location: '142 West 109th Street', title: 'Residential building renovation', description: 'Plans are being presented for a substantial renovation of an existing residential property, including changes to shared and exterior spaces.', impact: 'The work could affect current residents during construction and change how the property and surrounding block are used afterward.' },
+];
+sampleMeetings[2].agenda = [
+  { id: 'demo-columbus-318', category: 'Licensing', location: '318 Columbus Avenue', title: 'Restaurant liquor license application', description: 'A restaurant is requesting Community Board support for a liquor license and proposed evening operating hours.', impact: 'The application could affect nightlife, noise, local business activity, and residents living near the restaurant.' },
+  { id: 'demo-amsterdam-475', category: 'Licensing', location: '475 Amsterdam Avenue', title: 'Sidewalk café application', description: 'A café is proposing an outdoor seating area that would occupy part of the sidewalk during operating hours.', impact: 'Outdoor seating could affect available sidewalk space, accessibility, street activity, and nearby residents and businesses.' },
+  { id: 'demo-west-86', category: 'Transportation', location: 'West 86th Street', title: 'Curbside loading-zone proposal', description: 'A proposal would reorganize part of the curb to create dedicated loading space for deliveries and passenger pickup.', impact: 'The change could affect parking availability, deliveries, traffic flow, and double-parking on the block.' },
+  { id: 'demo-west-88', category: 'Housing', location: '205 West 88th Street', title: 'Residential conversion proposal', description: 'A property owner is presenting plans to convert existing space in the building into additional residential units.', impact: 'The proposal could add housing while changing the use and density of the existing property.' },
+];
+
+pastMeetings[1].agenda = [
+  { id: 'demo-past-business-license', category: 'Licensing', location: '267 Amsterdam Avenue', title: 'Restaurant liquor license application', description: 'The Board considered a fictional restaurant application and proposed evening hours.', decision: 'The Board recommended support with a request for earlier outdoor closing hours and a clear process for responding to noise concerns.', meaning: 'The recommendation expressed the Board’s preferred conditions. It did not grant a liquor license.', next: 'The applicant can provide updated information for consideration by the responsible licensing authority.' },
+  { id: 'demo-past-business-cafe', category: 'Licensing', location: 'Columbus Avenue', title: 'Outdoor café seating', description: 'The Board reviewed a proposed seating layout outside a fictional café.', decision: 'The Board requested a revised plan showing a wider pedestrian route before offering further recommendations.', meaning: 'The Board sought clarification about accessibility rather than authorizing sidewalk use.', next: 'The applicant can revise the layout for review through the relevant city process.' },
+  { id: 'demo-past-business-loading', category: 'Transportation', location: 'West 104th Street', title: 'Commercial loading space', description: 'The Board considered changing a section of curb to accommodate deliveries.', decision: 'The Board recommended evaluating a limited loading area and monitoring its effect on nearby access.', meaning: 'The recommendation identified a possible approach. It did not change parking rules or install a loading zone.', next: 'The responsible agency can assess the proposal and determine whether further design or outreach is needed.' },
+  { id: 'demo-past-business-housing', category: 'Housing', location: '142 West 109th Street', title: 'Residential building repairs', description: 'The Board discussed a fictional repair plan affecting shared areas in an occupied building.', decision: 'The Board requested clearer information about construction scheduling and resident access.', meaning: 'The request highlighted resident concerns and did not constitute approval of building work.', next: 'The property owner can provide revised plans and seek any required reviews.' },
+];
+pastMeetings[2].agenda = [
+  { id: 'demo-past-review-restaurant', category: 'Licensing', location: '318 Columbus Avenue', title: 'Restaurant operating hours', description: 'The Board reviewed a fictional restaurant’s license application and evening service plans.', decision: 'The Board recommended support with a request for a written noise-management plan.', meaning: 'The recommendation was advisory. A separate licensing decision would still be needed.', next: 'The application and recommendation can be considered by the relevant licensing authority.' },
+  { id: 'demo-past-review-sidewalk', category: 'Licensing', location: '475 Amsterdam Avenue', title: 'Sidewalk café layout', description: 'The Board considered a fictional outdoor seating proposal near a busy pedestrian route.', decision: 'The Board requested fewer tables and clearer drawings of the remaining sidewalk space.', meaning: 'The Board identified changes it wanted reviewed, without granting permission for outdoor seating.', next: 'The café can submit revised information through the applicable review process.' },
+  { id: 'demo-past-review-crossing', category: 'Transportation', location: 'West 86th Street', title: 'Pedestrian crossing improvements', description: 'The Board discussed a sample proposal to improve visibility at a crossing.', decision: 'The Board recommended a site assessment and consideration of curb adjustments.', meaning: 'The recommendation called for further evaluation rather than committing the city to construction.', next: 'The responsible agency can examine conditions and identify any feasible changes.' },
+  { id: 'demo-past-review-conversion', category: 'Housing', location: '205 West 88th Street', title: 'Residential conversion proposal', description: 'The Board considered a fictional plan to convert existing space into additional apartments.', decision: 'The Board requested more information about the proposed units and effects on existing occupants.', meaning: 'The request did not authorize the conversion or determine its compliance with city requirements.', next: 'The applicant can supply additional information for the next stage of review.' },
+];
+
+// Derived list counts reflect the richer content; existing dates/titles stay intact.
+sampleMeetings.slice(1, 3).forEach((meeting) => {
+  meeting.agendaCategories = meeting.agenda.map((item) => item.category);
+});
+pastMeetings.slice(1, 3).forEach((meeting) => {
+  meeting.decisionCategories = meeting.agenda.map((item) => item.category);
+});
+let activeUpcomingMeeting = housingMeeting;
+let activePastMeeting = heroPastMeeting;
+const upcomingDetailTitle = (meeting) => meeting.id === housingMeeting.id
+  ? 'Housing & Neighborhood Improvements' : meeting.title;
+
 const dateFormat = new Intl.DateTimeFormat('en-US', {
   month: 'short', day: 'numeric', year: 'numeric', timeZone: 'America/New_York',
 });
@@ -232,7 +299,40 @@ function renderUpcomingMeetings() {
 
 function renderPastMeetings() {
   const sortedMeetings = [...pastMeetings].sort((a, b) => new Date(b.start) - new Date(a.start));
-  renderMeetingRows(document.querySelector('#past-list'), sortedMeetings, true);
+  const list = document.querySelector('#past-list');
+  const firstIndex = (pastPage - 1) * meetingsPerPage;
+  list.start = firstIndex + 1;
+  renderMeetingRows(list, sortedMeetings.slice(firstIndex, firstIndex + meetingsPerPage), true);
+}
+
+function renderPastPagination() {
+  const pagination = document.querySelector('#past-pagination');
+  const pageCount = Math.ceil(pastMeetings.length / meetingsPerPage);
+  pagination.replaceChildren();
+
+  function addButton(label, page, accessibleLabel, disabled = false) {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'page-control';
+    button.textContent = label;
+    button.setAttribute('aria-label', accessibleLabel);
+    button.disabled = disabled;
+    if (label === String(pastPage)) button.setAttribute('aria-current', 'page');
+    button.addEventListener('click', () => {
+      pastPage = page;
+      renderPastMeetings();
+      renderPastPagination();
+      pagination.querySelector('[aria-current="page"]').focus({ preventScroll: true });
+      document.querySelector('#past-page-status').textContent = `Page ${pastPage} of ${pageCount}`;
+    });
+    pagination.append(button);
+  }
+
+  addButton('‹', pastPage - 1, 'Previous page', pastPage === 1);
+  for (let page = 1; page <= pageCount; page += 1) {
+    addButton(String(page), page, `Page ${page}`);
+  }
+  addButton('›', pastPage + 1, 'Next page', pastPage === pageCount);
 }
 
 // Both lists share row structure and styling; only dates and count wording differ.
@@ -251,14 +351,16 @@ function renderMeetingRows(list, meetings, isPast = false) {
     button.type = 'button';
     button.className = 'upcoming-row';
     button.dataset.meetingId = meeting.id;
-    if (!isPast && meeting.id === housingMeeting.id) {
+    if (!isPast && meeting.agenda) {
       button.addEventListener('click', () => {
+        activeUpcomingMeeting = meeting;
         renderMeetingDetail();
         showScreen('meeting-detail');
       });
     }
-    if (isPast && meeting.id === heroPastMeeting.id) {
+    if (isPast && meeting.agenda) {
       button.addEventListener('click', () => {
+        activePastMeeting = meeting;
         renderPastMeetingDetail();
         showScreen('past-detail');
       });
@@ -351,21 +453,21 @@ function renderPagination() {
 // Reuse the same DOM rows when reordering, preserving open panels and draft text.
 const agendaRows = new Map();
 
-function calendarUrl() {
-  const start = new Date(housingMeeting.start);
+function calendarUrl(meeting) {
+  const start = new Date(meeting.start);
   const end = new Date(start.getTime() + 90 * 60 * 1000);
   const calendarDate = (date) => date.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}Z$/, 'Z');
   const params = new URLSearchParams({
     action: 'TEMPLATE',
-    text: '[FICTIONAL DEMO] Housing & Neighborhood Improvements',
+    text: message('calendarTitle', { title: translate(upcomingDetailTitle(meeting)) }),
     dates: `${calendarDate(start)}/${calendarDate(end)}`,
     ctz: 'America/New_York',
-    details: `Fictional demo only — not a verified real meeting. ${housingMeeting.board}. ${housingMeeting.preview} Duration assumed to be 90 minutes; meeting location is not specified.`,
+    details: message('calendarDetails', { board: translate(meeting.board), preview: translate(meeting.preview) }),
   });
   return `https://calendar.google.com/calendar/render?${params}`;
 }
 
-function createAgendaRow(item, isPast = false) {
+function createAgendaRow(item, isPast = false, meeting) {
   const row = document.createElement('details');
   row.className = 'agenda-item';
   const summary = document.createElement('summary');
@@ -422,7 +524,8 @@ function createAgendaRow(item, isPast = false) {
   const calendar = document.createElement('a');
   calendar.className = 'agenda-action';
   calendar.textContent = 'Add to Calendar';
-  calendar.href = calendarUrl();
+  calendar.href = calendarUrl(meeting);
+  calendar.dataset.calendarMeeting = meeting.id;
   calendar.target = '_blank';
   calendar.rel = 'noopener noreferrer';
   actions.append(questionButton, calendar);
@@ -460,14 +563,24 @@ function createAgendaRow(item, isPast = false) {
     event.preventDefault();
     const question = textarea.value.trim();
     if (!question) {
-      textarea.setCustomValidity('Please enter a question.');
+      textarea.setCustomValidity(translate('Please enter a question.'));
       textarea.reportValidity();
       return;
     }
-    const subject = `[FICTIONAL DEMO] ${dateFormat.format(new Date(housingMeeting.start))} — ${item.title} — ${item.location}`;
-    const body = `Fictional demo only — not for a real Community Board.\n\nMeeting: Housing & Neighborhood Improvements\nDate: ${dateFormat.format(new Date(housingMeeting.start))}, ${timeFormat.format(new Date(housingMeeting.start))} (New York time)\nAgenda item: ${item.title}\nLocation: ${item.location}\n\nMy question:\n${question}`;
+    const values = {
+      meeting: translate(upcomingDetailTitle(meeting)),
+      date: localizedDate(meeting.start),
+      time: localizedTime(meeting.start),
+      board: translate(meeting.board),
+      title: translate(item.title),
+      location: item.location,
+      question,
+    };
+    const subject = message('emailSubject', values);
+    const body = message('emailBody', values);
     window.location.href = `mailto:board-demo@example.invalid?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   });
+  textarea.addEventListener('invalid', () => textarea.setCustomValidity(translate('Please enter a question.')));
   textarea.addEventListener('input', () => textarea.setCustomValidity(''));
   expanded.append(impactHeading, impact, actions, note, form);
   row.append(summary, expanded);
@@ -475,18 +588,21 @@ function createAgendaRow(item, isPast = false) {
 }
 
 function renderMeetingDetail() {
+  const meeting = activeUpcomingMeeting;
+  document.querySelector('#meeting-detail-screen h1').textContent = upcomingDetailTitle(meeting);
   document.querySelector('#detail-meeting-meta').textContent =
-    `${dateFormat.format(new Date(housingMeeting.start))} · ${timeFormat.format(new Date(housingMeeting.start))} (New York time) · ${housingMeeting.board}`;
-  document.querySelector('#detail-meeting-preview').textContent = housingMeeting.preview;
-  renderOrderedAgenda(housingMeeting, '#meeting-agenda');
+    `${dateFormat.format(new Date(meeting.start))} · ${timeFormat.format(new Date(meeting.start))} (New York time) · ${meeting.board}`;
+  document.querySelector('#detail-meeting-preview').textContent = meeting.preview;
+  renderOrderedAgenda(meeting, '#meeting-agenda');
 }
 
 function renderPastMeetingDetail() {
-  document.querySelector('#past-detail-title').textContent = heroPastMeeting.title;
+  const meeting = activePastMeeting;
+  document.querySelector('#past-detail-title').textContent = meeting.title;
   document.querySelector('#past-detail-meta').textContent =
-    `${dateFormat.format(new Date(heroPastMeeting.start))} · ${heroPastMeeting.board}`;
-  document.querySelector('#past-detail-preview').textContent = heroPastMeeting.preview;
-  renderOrderedAgenda(heroPastMeeting, '#past-meeting-agenda', true);
+    `${dateFormat.format(new Date(meeting.start))} · ${meeting.board}`;
+  document.querySelector('#past-detail-preview').textContent = meeting.preview;
+  renderOrderedAgenda(meeting, '#past-meeting-agenda', true);
 }
 
 function renderOrderedAgenda(meeting, container, isPast = false) {
@@ -498,7 +614,7 @@ function renderOrderedAgenda(meeting, container, isPast = false) {
 
   function appendItems(items) {
     items.forEach((item) => {
-      if (!agendaRows.has(item.id)) agendaRows.set(item.id, createAgendaRow(item, isPast));
+      if (!agendaRows.has(item.id)) agendaRows.set(item.id, createAgendaRow(item, isPast, meeting));
       agenda.append(agendaRows.get(item.id));
     });
   }
@@ -519,6 +635,7 @@ function showScreen(screen) {
     main.hidden = main.id !== `${screen}-screen`;
   });
   interestsDropdown.open = false;
+  translateInterface();
   const heading = document.querySelector(`#${screen}-screen h1`);
   heading.tabIndex = -1;
   heading.focus({ preventScroll: true });
@@ -546,3 +663,36 @@ interestsDropdown.addEventListener('change', () => {
 renderUpcomingMeetings();
 renderPastMeetings();
 renderPagination();
+renderPastPagination();
+
+
+function setLanguage(language) {
+  if (!['en', 'es'].includes(language) || language === currentLanguage) return;
+  currentLanguage = language;
+  renderHomeTypography();
+  translateInterface();
+  // Cached rows may be detached while another meeting is on screen.
+  agendaRows.forEach(row => {
+    translateInterface(row);
+    row.querySelectorAll('[data-calendar-meeting]').forEach(link => {
+      const meeting = sampleMeetings.find(record => record.id === link.dataset.calendarMeeting);
+      link.href = calendarUrl(meeting);
+    });
+    row.querySelectorAll('textarea').forEach(textarea => {
+      if (textarea.validity.customError) textarea.setCustomValidity(translate('Please enter a question.'));
+    });
+  });
+  document.querySelectorAll('.language-option').forEach(button => {
+    if (button.lang === language) button.setAttribute('aria-current', 'true');
+    else button.removeAttribute('aria-current');
+  });
+}
+
+document.querySelectorAll('.language-option').forEach(button => {
+  button.addEventListener('click', () => setLanguage(button.lang));
+});
+// Dynamic content is created in English; localize after existing UI handlers run.
+// This leaves all pagination, selection, focus, draft, and accordion state intact.
+document.addEventListener('click', () => translateInterface());
+document.addEventListener('change', () => translateInterface());
+translateInterface();
